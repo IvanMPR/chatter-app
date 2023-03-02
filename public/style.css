@@ -5,7 +5,7 @@
   --pattern-lighter: #4f5357;
   --color-white: #fff;
   --color-black: #000;
-  --color-black-shadow: rgba(0, 0, 0, 0.5);
+  --color-black-shadow: rgba(0, 0, 0, 0.2);
 }
 
 *,
@@ -37,6 +37,8 @@ body {
   grid-template-rows: repeat(2, 1fr) 8fr 1fr 2fr 1fr;
   grid-column-gap: 3px;
   grid-row-gap: 3px;
+  padding: 0.25rem;
+  box-shadow: var(--color-black-shadow) 5px 5px 5px 5px;
 }
 
 /** -------------------CHATTER------------------------ **/
@@ -45,7 +47,7 @@ body {
   grid-area: 1 / 1 / 2 / 3;
   text-align: center;
   background-color: var(--pattern-darker);
-  box-shadow: var(--color-black-shadow) 2px 2px 5px;
+  /* box-shadow: var(--color-black-shadow) 2px 2px 5px; */
   border: 1px solid var(--color-white);
 }
 .chatter-title-h1 {
@@ -168,20 +170,46 @@ body {
   width: 100%;
   padding: 1rem;
   font-size: 1.5rem;
-  font-family: 'Roboto', 'sans serif';
+  font-family: 'Roboto', 'sans-serif';
 }
+
 .chatter-ui-icon {
   position: absolute;
   top: 50%;
   right: 5%;
   transform: translate(0, -50%);
 }
+/* ---------MESSAGE INPUT------------- **/
 
-.div7 {
+.chatter-ui-message {
   grid-area: 5 / 1 / 6 / 3;
-  background-color: aliceblue;
 }
-.div8 {
+.chatter-ui-textarea {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-family: 'Roboto', 'sans-serif';
+  font-size: 1.5rem;
+}
+/* ---------BUTTON --------------------- **/
+
+.chatter-ui-button {
   grid-area: 6 / 1 / 7 / 3;
-  background-color: burlywood;
+  /* margin-bottom: 0.5rem; */
+}
+.chatter-ui-btn {
+  width: 100%;
+  height: 100%;
+  /* padding: 1rem; */
+  text-transform: uppercase;
+  cursor: pointer;
+  background-color: var(--color-primary-transparent);
+  color: var(--color-white);
+  font-size: 1.4rem;
+  border: 1px solid var(--color-white);
+  transition: all 0.2s;
+}
+
+.chatter-ui-btn:active {
+  border: 1px solid red;
+  background-color: var(--color-primary);
 }
