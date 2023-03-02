@@ -194,12 +194,11 @@ body {
 
 .chatter-ui-button {
   grid-area: 6 / 1 / 7 / 3;
-  /* margin-bottom: 0.5rem; */
 }
 .chatter-ui-btn {
   width: 100%;
   height: 100%;
-  /* padding: 1rem; */
+
   text-transform: uppercase;
   cursor: pointer;
   background-color: var(--color-primary-transparent);
