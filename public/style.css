@@ -6,6 +6,7 @@
   --color-white: #fff;
   --color-black: #000;
   --color-black-shadow: rgba(0, 0, 0, 0.2);
+  --color-active-btn: #ff0000;
 }
 
 *,
@@ -209,6 +210,6 @@ body {
 }
 
 .chatter-ui-btn:active {
-  border: 1px solid red;
+  border: 1px solid var(--color-active-btn);
   background-color: var(--color-primary);
 }
