@@ -71,6 +71,7 @@ export function sendMessage() {
   }
   if (usernamePlaceholder.textContent === 'Username') {
     alert('Please enter your name before sending a message...');
+    return;
   }
   if (
     usernamePlaceholder.textContent !== 'Username' &&
