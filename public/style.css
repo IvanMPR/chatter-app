@@ -74,6 +74,8 @@ body {
 
 .chatter-users-edit {
   display: block;
+  color: var(--color-primary);
+  cursor: pointer;
 }
 .chatter-messages-title {
   grid-area: 2 / 2 / 3 / 3;
@@ -87,6 +89,7 @@ body {
 .chatter-messages-icon {
   display: block;
   padding-left: 1rem;
+  color: var(--color-primary);
 }
 /** --------------USERS LIST------------------------- **/
 
@@ -128,7 +131,7 @@ body {
   overflow-y: auto;
 }
 .chatter-message {
-  width: 50%;
+  max-width: 53%;
   margin-bottom: 0.5rem;
 }
 /* utility class for right aligned message */
@@ -144,7 +147,11 @@ body {
 }
 
 /* utility class for right aligned message name(remove border rad from top right corner) */
+
+/** ---to be edited **/
+
 .aligned-right-name {
+  background-color: #add8e677;
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0;
 }
@@ -158,6 +165,13 @@ body {
   border-bottom-left-radius: 0.5rem;
   text-align: justify;
 }
+
+/** ---to be edited--- **/
+.aligned-right-text {
+  background-color: lightblue;
+  color: #333;
+}
+
 /** ---------INPUTS AND BUTTON----------- **/
 
 /* ---------USERNAME INPUT----------- **/
@@ -179,6 +193,8 @@ body {
   top: 50%;
   right: 5%;
   transform: translate(0, -50%);
+  color: var(--color-primary);
+  cursor: pointer;
 }
 /* ---------MESSAGE INPUT------------- **/
 
