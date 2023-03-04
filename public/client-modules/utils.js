@@ -4,6 +4,8 @@ export const messageInput = document.querySelector('.chatter-ui-textarea');
 const enterUsernameButton = document.querySelector('.chatter-ui-icon');
 const usernamePlaceholder = document.querySelector('.chatter-users-h2');
 const messagesContainer = document.querySelector('.chatter-messages');
+// ---------------------------------------------------------------//
+const botNameClient = 'Admin';
 
 export function enterUsername() {
   const newUsername = usernameInput.value;
@@ -24,6 +26,10 @@ export function enterUsername() {
   }
   usernamePlaceholder.textContent = newUsername;
   disableInputAndFocusTextArea(newUsername);
+  // notify server about new user/username
+  socket.emit('username added', { newUsername });
+  // display greeting
+  greetOnAddedUsername(newUsername);
 }
 
 function disableInputAndFocusTextArea(username) {
@@ -50,7 +56,7 @@ export function editUsername() {
   enableAndFocusInput();
 }
 
-function appendMessage(name, message) {
+export function appendMessage(name, message) {
   const html = `
    <div class="chatter-message">
        <h3 class="chatter-message-name">${name}</h3>
@@ -63,6 +69,7 @@ function appendMessage(name, message) {
   // scroll to bottom
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
+
 export function sendMessage() {
   if (messageInput.value.trim() === '') {
     alert('Please enter your message...');
@@ -83,8 +90,18 @@ export function sendMessage() {
   const message = messageInput.value;
 
   appendMessage(name, message);
-
+  // transfer message to the server
+  socket.emit('new message', {
+    user: name,
+    text: message,
+  });
   //   clear and focus for next message
   messageInput.value = '';
   messageInput.focus();
+}
+
+function greetOnAddedUsername(username) {
+  const message = `${username}, you're all set! Enjoy your Chatter...`;
+  const name = botNameClient;
+  appendMessage(name, message);
 }
