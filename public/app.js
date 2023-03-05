@@ -16,9 +16,13 @@ socket.on('new connection registered', data => {
 socket.on('new user alert', data => {
   appendMessage(data.sender, `${data.message} has joined the chat!`);
 });
-// ----------------------------
+// distribute chat message passed from server
 socket.on('incoming message', data => {
   appendMessage(data.user, data.text);
+});
+// alert that user has disconnected from chat ---------------------- //
+socket.on('user left alert', data => {
+  appendMessage(data.sender, `${data.leftUser} has left the chat...`);
 });
 // ---------------- --------------- ---------------------- //
 

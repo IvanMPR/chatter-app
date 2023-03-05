@@ -48,11 +48,11 @@ function enableAndFocusInput() {
 }
 
 export function editUsername() {
-  console.log('hi');
   if (usernamePlaceholder.textContent === 'Username') {
     alert("You're trying to edit username that is not yet set !");
     return;
   }
+  // send old username to server, and store it ....
   enableAndFocusInput();
 }
 

@@ -8,7 +8,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 // --------------------------------------------- //
 // prettier-ignore
-const { botName, initialMessage } = require('./public/server-modules/server-utils');
+const { botName, initialMessage, users } = require('./public/server-modules/server-utils');
 // --------------------------------------------- //
 
 // set static folder
@@ -26,6 +26,8 @@ io.on('connection', socket => {
   // user from new connection added his username
   socket.on('username added', data => {
     console.log(data);
+    const newUser = { username: data.newUsername, id: socket.id };
+    users.push(newUser);
     //  notify all other chat members about new user arrival
     socket.broadcast.emit('new user alert', {
       sender: botName,
@@ -37,6 +39,18 @@ io.on('connection', socket => {
   socket.on('new message', data => {
     // server forwards the message to all connected clients except the sender
     socket.broadcast.emit('incoming message', data);
+  });
+  // when user leaves chat
+  socket.on('disconnect', () => {
+    console.log(socket.id, users);
+    const disconnectedUser = users.find(user => user.id === socket.id);
+    console.log(disconnectedUser, 'from diss...');
+    if (disconnectedUser) {
+      socket.broadcast.emit('user left alert', {
+        sender: botName,
+        leftUser: disconnectedUser.username,
+      });
+    }
   });
 });
 // port
