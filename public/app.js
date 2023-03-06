@@ -1,6 +1,6 @@
 export const socket = io();
 // prettier-ignore
-import { messageInput, usernameInput, enterUsername, editUsername, sendMessage, appendMessage } from './client-modules/utils.js';
+import { messageInput, usernameInput, enterUsername, editUsername, sendMessage, appendMessage, displayConnectedUsers, usersListUl } from './client-modules/utils.js';
 const enterUsernameButton = document.querySelector('.chatter-ui-icon');
 const editUsernameButton = document.querySelector('.chatter-users-edit');
 const sendMessageButton = document.querySelector('.chatter-ui-btn');
@@ -15,6 +15,7 @@ socket.on('new connection registered', data => {
 // notify all members on new user
 socket.on('new user alert', data => {
   appendMessage(data.sender, `${data.message} has joined the chat!`);
+  displayConnectedUsers(usersListUl, data.users);
 });
 // distribute chat message passed from server
 socket.on('incoming message', data => {
@@ -22,7 +23,9 @@ socket.on('incoming message', data => {
 });
 // alert that user has disconnected from chat ---------------------- //
 socket.on('user left alert', data => {
+  console.log(data.users, ' from user left alert...');
   appendMessage(data.sender, `${data.leftUser} has left the chat...`);
+  displayConnectedUsers(usersListUl, data.users);
 });
 // ---------------- --------------- ---------------------- //
 

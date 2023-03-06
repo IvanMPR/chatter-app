@@ -4,6 +4,7 @@ export const messageInput = document.querySelector('.chatter-ui-textarea');
 const enterUsernameButton = document.querySelector('.chatter-ui-icon');
 const usernamePlaceholder = document.querySelector('.chatter-users-h2');
 const messagesContainer = document.querySelector('.chatter-messages');
+export const usersListUl = document.querySelector('.chatter-users-ul');
 // ---------------------------------------------------------------//
 const botNameClient = 'Admin';
 
@@ -104,4 +105,15 @@ function greetOnAddedUsername(username) {
   const message = `${username}, you're all set! Enjoy your Chatter...`;
   const name = botNameClient;
   appendMessage(name, message);
+}
+
+export function displayConnectedUsers(parentEl, usersList) {
+  console.log('hello from dcu..');
+  // clear UL from old users before updating list
+  // parentEl.innerHTML = '';
+  usersList.forEach(user => {
+    console.log('hello from li');
+    const html = `<li class="chatter-user-li">${user.username}</li>`;
+    parentEl.insertAdjacentHTML('beforeend', html);
+  });
 }

@@ -33,6 +33,7 @@ io.on('connection', socket => {
       sender: botName,
       id: socket.id,
       message: data.newUsername,
+      usersList: users,
     });
   });
   // on new message sent
@@ -43,12 +44,18 @@ io.on('connection', socket => {
   // when user leaves chat
   socket.on('disconnect', () => {
     console.log(socket.id, users);
-    const disconnectedUser = users.find(user => user.id === socket.id);
-    console.log(disconnectedUser, 'from diss...');
-    if (disconnectedUser) {
+    const disconnectedUserIndex = users.findIndex(
+      user => user.id === socket.id
+    );
+    console.log(disconnectedUserIndex, 'from diss...');
+    if (disconnectedUserIndex !== -1) {
+      const leftUser = users[disconnectedUserIndex].username;
+      users.splice(disconnectedUserIndex, 1);
+      console.log(users, 'after splicing...');
       socket.broadcast.emit('user left alert', {
         sender: botName,
-        leftUser: disconnectedUser.username,
+        leftUser,
+        users,
       });
     }
   });
