@@ -1,12 +1,20 @@
 import { socket } from '../app.js';
-export const usernameInput = document.querySelector('.chatter-ui-input');
-export const messageInput = document.querySelector('.chatter-ui-textarea');
-const enterUsernameButton = document.querySelector('.chatter-ui-icon');
 const usernamePlaceholder = document.querySelector('.chatter-users-h2');
 const messagesContainer = document.querySelector('.chatter-messages');
+
+export const usernameInput = document.querySelector('.chatter-ui-input');
+export const messageInput = document.querySelector('.chatter-ui-textarea');
 export const usersListUl = document.querySelector('.chatter-users-ul');
+
+export const enterUsernameButton = document.querySelector('.chatter-ui-icon');
+export const editUsernameButton = document.querySelector('.chatter-users-edit');
+export const sendMessageButton = document.querySelector('.chatter-ui-btn');
 // ---------------------------------------------------------------//
 const botNameClient = 'Admin';
+const helperObject = {
+  isUsernameModified: false,
+  oldUsername: '',
+};
 
 export function enterUsername() {
   const newUsername = usernameInput.value;
@@ -27,10 +35,19 @@ export function enterUsername() {
   }
   usernamePlaceholder.textContent = newUsername;
   disableInputAndFocusTextArea(newUsername);
-  // notify server about new user/username
-  socket.emit('username added', { newUsername });
+  // notify server about new username or edited username
+  helperObject.isUsernameModified
+    ? socket.emit('username modified', {
+        newUsername,
+        oldUsername: helperObject.oldUsername,
+      })
+    : socket.emit('username added', { newUsername });
+
   // display greeting
-  greetOnAddedUsername(newUsername);
+  greetOnAddedUsername(newUsername, helperObject.isUsernameModified);
+  // reset modified flag and oldUsername value
+  helperObject.isUsernameModified = false;
+  helperObject.oldUsername = '';
 }
 // helper fn
 function disableInputAndFocusTextArea(username) {
@@ -53,6 +70,10 @@ export function editUsername() {
     alert("You're trying to edit username that is not yet set !");
     return;
   }
+  // Add true flag to helper helperObject.isUsernameModified
+  // Store value of old username in helperObject.oldUsername
+  helperObject.isUsernameModified = true;
+  helperObject.oldUsername = usernamePlaceholder.textContent;
 
   enableAndFocusInput();
 }
@@ -64,7 +85,7 @@ export function appendMessage(name, message) {
        <p class="chatter-message-text">
           ${message}
        </p>
- </div>`;
+   </div>`;
 
   messagesContainer.insertAdjacentHTML('beforeend', html);
   // scroll to bottom
@@ -101,9 +122,12 @@ export function sendMessage() {
   messageInput.focus();
 }
 // helper function to greet user from Admin on adding username
-function greetOnAddedUsername(username) {
-  const message = `${username}, you're all set! Enjoy your Chatter...`;
+function greetOnAddedUsername(username, boolean) {
   const name = botNameClient;
+  const message = boolean
+    ? `You've successfully edited your username to ${username}`
+    : `${username}, you're all set! Enjoy your Chatter...`;
+
   appendMessage(name, message);
 }
 

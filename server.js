@@ -36,6 +36,23 @@ io.on('connection', socket => {
     // send users list
     io.emit('update users list', users);
   });
+  // USERNAME MODIFIED
+  socket.on('username modified', data => {
+    // extract old and new data passed from client and get index of user to be modified
+    const oldUsername = data.oldUsername;
+    const newUsername = data.newUsername;
+    const userToModifyIndex = users.findIndex(user => user.id === socket.id);
+    // modify username in users array
+    users[userToModifyIndex].username = newUsername;
+    // emit modification of username
+    socket.broadcast.emit('modified username', {
+      sender: botName,
+      message: `User ${oldUsername} changed username to ${newUsername}...`,
+    });
+    // send modified list
+    io.emit('update users list', users);
+  });
+
   // SEND MESSAGE
   socket.on('new message', data => {
     // server forwards the message to all connected clients except the sender

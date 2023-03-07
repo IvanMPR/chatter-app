@@ -1,9 +1,6 @@
 export const socket = io();
 // prettier-ignore
-import { messageInput, usernameInput, enterUsername, editUsername, sendMessage, appendMessage, displayConnectedUsers, usersListUl} from './client-modules/utils.js';
-const enterUsernameButton = document.querySelector('.chatter-ui-icon');
-const editUsernameButton = document.querySelector('.chatter-users-edit');
-const sendMessageButton = document.querySelector('.chatter-ui-btn');
+import { messageInput, usernameInput, enterUsername, editUsername, sendMessage, appendMessage, displayConnectedUsers, usersListUl, enterUsernameButton, editUsernameButton, sendMessageButton} from './client-modules/utils.js';
 
 // ---------------- SOCKETS HANDLING ---------------------- //
 // send 'new connection' event to the server when someone connects
@@ -16,7 +13,11 @@ socket.on('new connection registered', data => {
 socket.on('new user alert', data => {
   appendMessage(data.sender, `${data.message} has joined the chat!`);
 });
-
+// notify all members that user has modified his username
+socket.on('modified username', data => {
+  appendMessage(data.sender, data.message);
+});
+// update active users list
 socket.on('update users list', data => {
   displayConnectedUsers(usersListUl, data);
 });
