@@ -15,7 +15,7 @@ const { botName, initialMessage, users } = require('./public/server-modules/serv
 app.use(express.static(path.join(__dirname, 'public')));
 // ----------- SOCKETS HANDLING ------------------------------- //
 io.on('connection', socket => {
-  // new connection to server
+  // NEW CONNECTION
   socket.on('new connection', () => {
     socket.emit('new connection registered', {
       sender: botName,
@@ -23,9 +23,8 @@ io.on('connection', socket => {
       message: initialMessage,
     });
   });
-  // user from new connection added his username
+  // USERNAME ADDED
   socket.on('username added', data => {
-    console.log(data);
     const newUser = { username: data.newUsername, id: socket.id };
     users.push(newUser);
     //  notify all other chat members about new user arrival
@@ -33,33 +32,37 @@ io.on('connection', socket => {
       sender: botName,
       id: socket.id,
       message: data.newUsername,
-      usersList: users,
     });
+    // send users list
+    io.emit('update users list', users);
   });
-  // on new message sent
+  // SEND MESSAGE
   socket.on('new message', data => {
     // server forwards the message to all connected clients except the sender
     socket.broadcast.emit('incoming message', data);
   });
-  // when user leaves chat
+  // USER LEAVES
   socket.on('disconnect', () => {
-    console.log(socket.id, users);
+    // locate user who disconnected by his index in users array
     const disconnectedUserIndex = users.findIndex(
       user => user.id === socket.id
     );
-    console.log(disconnectedUserIndex, 'from diss...');
+
     if (disconnectedUserIndex !== -1) {
+      // get disconnected user name
       const leftUser = users[disconnectedUserIndex].username;
+      // delete disconnected user from users array
       users.splice(disconnectedUserIndex, 1);
-      console.log(users, 'after splicing...');
+      // emit that user has left the chat
       socket.broadcast.emit('user left alert', {
         sender: botName,
         leftUser,
-        users,
       });
+      // emit updated users array //
+      io.emit('update users list', users);
     }
   });
 });
-// port
+// PORT
 const PORT = 3000 || process.env.port;
 server.listen(PORT, () => console.log(`Server running on ${PORT}`));

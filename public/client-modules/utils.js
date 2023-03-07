@@ -32,14 +32,14 @@ export function enterUsername() {
   // display greeting
   greetOnAddedUsername(newUsername);
 }
-
+// helper fn
 function disableInputAndFocusTextArea(username) {
   usernamePlaceholder.placeholder = username;
   usernameInput.disabled = true;
   messageInput.focus();
   enterUsernameButton.style.pointerEvents = 'none';
 }
-
+// helper fn
 function enableAndFocusInput() {
   usernameInput.disabled = false;
   usernameInput.value = '';
@@ -53,10 +53,10 @@ export function editUsername() {
     alert("You're trying to edit username that is not yet set !");
     return;
   }
-  // send old username to server, and store it ....
+
   enableAndFocusInput();
 }
-
+// main function for appending/displaying messages in chat area
 export function appendMessage(name, message) {
   const html = `
    <div class="chatter-message">
@@ -70,7 +70,7 @@ export function appendMessage(name, message) {
   // scroll to bottom
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
-
+// validating input and sending message
 export function sendMessage() {
   if (messageInput.value.trim() === '') {
     alert('Please enter your message...');
@@ -100,7 +100,7 @@ export function sendMessage() {
   messageInput.value = '';
   messageInput.focus();
 }
-
+// helper function to greet user from Admin on adding username
 function greetOnAddedUsername(username) {
   const message = `${username}, you're all set! Enjoy your Chatter...`;
   const name = botNameClient;
@@ -108,11 +108,10 @@ function greetOnAddedUsername(username) {
 }
 
 export function displayConnectedUsers(parentEl, usersList) {
-  console.log('hello from dcu..');
   // clear UL from old users before updating list
-  // parentEl.innerHTML = '';
+  parentEl.innerHTML = '';
+
   usersList.forEach(user => {
-    console.log('hello from li');
     const html = `<li class="chatter-user-li">${user.username}</li>`;
     parentEl.insertAdjacentHTML('beforeend', html);
   });
