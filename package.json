@@ -4,7 +4,8 @@
   "description": "chat application",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "./public/index.html"
   },
   "repository": {
     "type": "git",
