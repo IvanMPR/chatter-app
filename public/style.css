@@ -132,7 +132,7 @@ body {
 }
 .chatter-message {
   max-width: 53%;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 /* utility class for right aligned message */
 .aligned-right-message {
@@ -144,6 +144,7 @@ body {
   padding: 0.5rem;
   background-color: var(--color-primary-transparent);
   border-top-right-radius: 0.5rem;
+  letter-spacing: 0.1em;
 }
 
 /* utility class for right aligned message name(remove border rad from top right corner) */

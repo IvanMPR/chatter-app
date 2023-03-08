@@ -78,11 +78,15 @@ export function editUsername() {
   enableAndFocusInput();
 }
 // main function for appending/displaying messages in chat area
-export function appendMessage(name, message) {
+export function appendMessage(name, message, rightAligned = false) {
   const html = `
-   <div class="chatter-message">
-       <h3 class="chatter-message-name">${name}</h3>
-       <p class="chatter-message-text">
+   <div class="chatter-message ${rightAligned ? 'aligned-right-message' : ''}">
+       <h3 class="chatter-message-name ${
+         rightAligned ? 'aligned-right-name' : ''
+       }">${name}</h3>
+       <p class="chatter-message-text ${
+         rightAligned ? 'aligned-right-text' : ''
+       }">
           ${message}
        </p>
    </div>`;
@@ -111,7 +115,7 @@ export function sendMessage() {
   const name = usernamePlaceholder.textContent;
   const message = messageInput.value;
 
-  appendMessage(name, message);
+  appendMessage(name, message, true);
   // transfer message to the server
   socket.emit('new message', {
     user: name,
