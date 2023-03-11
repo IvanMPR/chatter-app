@@ -82,4 +82,4 @@ io.on('connection', socket => {
 });
 // PORT
 const PORT = 3000 || process.env.port;
-server.listen(PORT, () => console.log(`Server running on ${PORT}`));
+server.listen(PORT);
