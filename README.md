@@ -19,3 +19,6 @@ Real time chat app, built around Node.js server with Socket.io library for handl
 App can register user connections, disconnections, username edit and communication between all clients
 
 List of active users is displayed in the left part of the app screen and updated according to connections
+
+#### Tech
+Node.js, Express, Socket.io, HTML, CSS, JavaScript
