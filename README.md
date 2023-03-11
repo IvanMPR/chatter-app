@@ -22,3 +22,6 @@ List of active users is displayed in the left part of the app screen and updated
 
 #### Tech
 Node.js, Express, Socket.io, HTML, CSS, JavaScript
+
+Short delays might occur, especially with active users list update and automated messages display in messages area. 
+Most likely, this happens due to the latency issues with render hosting service where the app is hosted in free tier.
