@@ -103,12 +103,14 @@ export function sendMessage() {
     return;
   }
   if (usernamePlaceholder.textContent === 'Username') {
+    console.log('one hits');
     alert('Please enter your name before sending a message...');
     return;
   }
   if (
     usernamePlaceholder.textContent !== 'Username' &&
-    usernameInput.placeholder === 'Edit your username'
+    usernameInput.getAttribute('placeholder') &&
+    usernameInput.value === ''
   ) {
     alert('Please enter your name before sending a message...');
   }
